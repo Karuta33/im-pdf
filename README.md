@@ -13,7 +13,6 @@ Tool sederhana buat konversi gambar jadi PDF sama kompresi PDF, jalanin sendiri 
 - **pdf-lib** — buat ngolah PDF (embed gambar, bikin halaman, dll)
 - **Ghostscript (`gs`)** — buat kompresi PDF, lebih powerful dibanding kompresi pake JS murni
 - **Multer** — handle upload file
-- **UUID** — biar nama file outputnya unik
 
 ## Syarat
 
@@ -44,10 +43,8 @@ brew install ghostscript
 ## Cara Install
 
 ```bash
-# clone repo
-git clone https://github.com/namausername/im-pdf-tools.git
-cd im-pdf-tools
-
+# clone repo https://github.com/Karuta33/im-pdf
+cd im-pdf
 # install dependencies
 npm install
 ```
@@ -86,19 +83,6 @@ Semua response bentuknya JSON. Contoh response sukses convert:
   "pages": 5,
   "size": 102400
 }
-```
-
-## Struktur Folder
-
-```
-├── public/
-│   ├── index.html          # halaman Image to PDF
-│   ├── compress.html       # halaman Compress PDF
-│   └── assets/style.css    # styling
-├── uploads/                # temporary storage buat file upload & hasil
-├── main.js                 # server utama
-├── package.json
-└── README.md
 ```
 
 ## Catatan Penting
