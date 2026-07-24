@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compress PDF Tools</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </div>
+        <span class="nav-logo-text">IM-PDF <span>Tools</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="nav-text">Image to PDF</span>
+        </a>
+        <a href="/compress.html" class="nav-link nav-active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          <span class="nav-text">Compress PDF</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <main class="main">
+    <div class="hero">
+      <h1>Compress <span>PDF</span></h1>
+      <p>Kompresi file PDF tanpa mengurangi kualitas secara signifikan</p>
+    </div>
+    <div id="dropZone" class="dropzone">
+      <input type="file" id="fileInput" accept=".pdf" style="display:none">
+      <div class="dropzone-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+      </div>
+      <h3>Seret &amp; lepas file PDF</h3>
+      <p class="sub">atau klik untuk memilih file</p>
+      <p class="hint">Format PDF &middot; Maks 100MB</p>
+    </div>
+    <div id="fileInfo" class="card hidden mb-6">
+      <div class="file-info">
+        <div class="file-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div class="file-details">
+          <p id="fileName" class="file-name"></p>
+          <p id="fileSize" class="file-size"></p>
+        </div>
+        <button class="btn-close" onclick="removeFile()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div id="optionsSection" class="card hidden mb-6">
+      <div class="section-title" style="margin-bottom:0">
+        <h2>Level Kompresi</h2>
+      </div>
+      <div class="compress-grid" style="margin-top:1rem">
+        <div class="compress-card" onclick="selectLevel(this, 'low')">
+          <div class="compress-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </div>
+          <div class="label">Low</div>
+          <div class="desc">Ringan</div>
+        </div>
+        <div class="compress-card active" onclick="selectLevel(this, 'medium')">
+          <div class="compress-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </div>
+          <div class="label">Medium</div>
+          <div class="desc">Disarankan</div>
+        </div>
+        <div class="compress-card" onclick="selectLevel(this, 'high')">
+          <div class="compress-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-7 7m0 0l-7-7m7 7V3"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 3l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </div>
+          <div class="label">High</div>
+          <div class="desc">Maksimal</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="compressSection" class="hidden text-center mb-8">
+      <button id="compressBtn" onclick="compressPdf()" class="btn btn-primary">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        Kompresi PDF
+      </button>
+    </div>
+
+    <div id="loading" class="hidden text-center" style="padding:3rem 0">
+      <div class="spinner"></div>
+      <p class="loading-text">Mengkompresi PDF...</p>
+      <p class="loading-sub">Proses ini mungkin memakan waktu</p>
+    </div>
+
+    <div id="result" class="hidden mb-8">
+      <div class="card mb-6">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <div class="result-icon" style="margin:0;flex-shrink:0">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <h3 class="result-title">Kompresi Berhasil!</h3>
+            <p id="resultPages" class="file-size"></p>
+          </div>
+        </div>
+
+        <div style="background:var(--gray-50);border-radius:0.75rem;padding:1rem">
+          <div class="progress-label">
+            <span>Ukuran Asli</span>
+            <strong id="originalSize" class="gray"></strong>
+          </div>
+          <div class="progress-bar" style="margin-bottom:0.75rem">
+            <div class="fill fill-gray"></div>
+          </div>
+
+          <div class="progress-label">
+            <span>Ukuran Kompresi</span>
+            <strong id="compressedSize" class="red"></strong>
+          </div>
+          <div class="progress-bar">
+            <div id="compressedBar" class="fill fill-red" style="width:0%"></div>
+          </div>
+
+          <div class="text-center">
+            <span id="savedPercent" class="saved-badge">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+              Hemat 0%
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a id="downloadBtn" href="#" download class="btn btn-primary" style="display:inline-flex">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Download PDF
+        </a>
+        <div><button onclick="resetAll()" style="font-size:0.875rem;color:var(--gray-400);background:none;border:none;cursor:pointer;padding:0.75rem">Kompresi Lagi</button></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    let selectedFile = null;
+    let selectedLevel = 'medium';
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const optionsSection = document.getElementById('optionsSection');
+    const compressSection = document.getElementById('compressSection');
+    const loadingEl = document.getElementById('loading');
+    const resultEl = document.getElementById('result');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    function selectLevel(el, level) {
+      selectedLevel = level;
+      document.querySelectorAll('.compress-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function handleFile(file) {
+      if (file.type !== 'application/pdf') {
+        alert('Hanya file PDF yang diperbolehkan.');
+        return;
+      }
+      selectedFile = file;
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileSize').textContent = formatSize(file.size);
+
+      dropZone.classList.add('hidden');
+      fileInfo.classList.remove('hidden');
+      optionsSection.classList.remove('hidden');
+      compressSection.classList.remove('hidden');
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(2) + ' MB';
+    }
+
+    function removeFile() {
+      selectedFile = null;
+      fileInput.value = '';
+      dropZone.classList.remove('hidden');
+      fileInfo.classList.add('hidden');
+      optionsSection.classList.add('hidden');
+      compressSection.classList.add('hidden');
+    }
+
+    async function compressPdf() {
+      if (!selectedFile) return;
+
+      const btn = document.getElementById('compressBtn');
+      btn.disabled = true;
+      fileInfo.classList.add('hidden');
+      optionsSection.classList.add('hidden');
+      compressSection.classList.add('hidden');
+      loadingEl.classList.remove('hidden');
+
+      const formData = new FormData();
+      formData.append('pdf', selectedFile);
+      formData.append('level', selectedLevel);
+
+      try {
+        const res = await fetch('/api/compress', { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Gagal mengkompresi');
+
+        loadingEl.classList.add('hidden');
+        resultEl.classList.remove('hidden');
+
+        document.getElementById('resultPages').textContent = data.pages + ' halaman';
+        document.getElementById('originalSize').textContent = formatSize(data.originalSize);
+        document.getElementById('compressedSize').textContent = formatSize(data.compressedSize);
+        document.getElementById('savedPercent').innerHTML =
+          '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg> Hemat ' + data.savedPercent + '%';
+
+        setTimeout(() => {
+          const pct = Math.max(5, (data.compressedSize / data.originalSize) * 100);
+          document.getElementById('compressedBar').style.width = pct + '%';
+        }, 100);
+
+        document.getElementById('downloadBtn').href = data.downloadUrl;
+        document.getElementById('downloadBtn').download = 'compressed.pdf';
+      } catch (err) {
+        loadingEl.classList.add('hidden');
+        fileInfo.classList.remove('hidden');
+        optionsSection.classList.remove('hidden');
+        compressSection.classList.remove('hidden');
+        btn.disabled = false;
+        alert(err.message);
+      }
+    }
+
+    function resetAll() {
+      selectedFile = null;
+      resultEl.classList.add('hidden');
+      dropZone.classList.remove('hidden');
+      fileInfo.classList.add('hidden');
+      optionsSection.classList.add('hidden');
+      compressSection.classList.add('hidden');
+      document.getElementById('compressBtn').disabled = false;
+      document.getElementById('compressedBar').style.width = '0%';
+      fileInput.value = '';
+    }
+  </script>
+</body>
+</html>
